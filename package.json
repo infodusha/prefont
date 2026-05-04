@@ -1,0 +1,51 @@
+{
+  "name": "prefont",
+  "version": "0.0.1",
+  "description": "",
+  "homepage": "https://github.com/infodusha/prefont#readme",
+  "bugs": {
+    "url": "https://github.com/infodusha/prefont/issues"
+  },
+  "license": "Apache-2.0",
+  "author": "infodusha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infodusha/prefont.git"
+  },
+  "bin": {
+    "prefont": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/cli.js",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "clean": "rm -rf dist",
+    "example": "pnpm -F prefont-example demo",
+    "lint": "oxlint",
+    "fmt": "oxfmt"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.17",
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0",
+    "typescript": "~6.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

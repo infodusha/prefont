@@ -1,0 +1,14 @@
+{
+  "name": "prefont-example",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prefont": "prefont",
+    "start": "node index.js",
+    "demo": "pnpm prefont && pnpm start"
+  },
+  "dependencies": {
+    "prefont": "workspace:*"
+  }
+}
