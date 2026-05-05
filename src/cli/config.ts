@@ -22,7 +22,5 @@ export async function loadConfig(cwd: string, override?: string): Promise<Config
     throw new Error(`Invalid ${path.relative(cwd, configPath)}:\n${z.prettifyError(parsed.error)}`);
   }
 
-  const config = parsed.data;
-  delete config.$schema;
-  return config;
+  return parsed.data;
 }

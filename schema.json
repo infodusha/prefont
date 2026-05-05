@@ -5,19 +5,101 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "$schema": {
+    "$schema": { "description": "JSON Schema reference for editor tooling.", "type": "string" },
+    "out": {
+      "default": ".prefont/data.json",
+      "description": "Output file path for generated data, relative to the config file.",
       "type": "string"
     },
-    "name": {
-      "description": "test",
-      "type": "string"
-    },
-    "fonts": {
+    "browsers": {
+      "minItems": 1,
       "type": "array",
       "items": {
-        "type": "string"
-      }
+        "type": "string",
+        "enum": ["chromium", "firefox", "webkit"],
+        "description": "Browser engine to measure fonts in."
+      },
+      "description": "Default browsers used to measure every font."
+    },
+    "symbolSets": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Unique identifier used to reference this set from font items."
+          },
+          "chars": {
+            "type": "string",
+            "description": "String of characters to measure as part of this set."
+          }
+        },
+        "required": ["name", "chars"]
+      },
+      "description": "Reusable symbol set definitions referenced by fonts."
+    },
+    "fonts": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "font": {
+            "type": "string",
+            "description": "Path to the font file, resolved relative to the config file."
+          },
+          "family": {
+            "type": "string",
+            "description": "CSS font-family name to register and measure."
+          },
+          "weights": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1, "maximum": 1000 },
+            "description": "Font weights to measure (1-1000, e.g. 400, 700)."
+          },
+          "browsers": {
+            "description": "Override the top-level browsers list for this font.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["chromium", "firefox", "webkit"],
+              "description": "Browser engine to measure fonts in."
+            }
+          },
+          "symbolSets": {
+            "description": "Override the top-level symbol sets for this font.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "anyOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Unique identifier used to reference this set from font items."
+                    },
+                    "chars": {
+                      "type": "string",
+                      "description": "String of characters to measure as part of this set."
+                    }
+                  },
+                  "required": ["name", "chars"]
+                }
+              ],
+              "description": "Either the name of a top-level symbolSets entry, or an inline symbol set definition."
+            }
+          }
+        },
+        "required": ["font", "family", "weights"]
+      },
+      "description": "Fonts to measure."
     }
   },
-  "additionalProperties": false
+  "required": ["browsers", "symbolSets", "fonts"]
 }

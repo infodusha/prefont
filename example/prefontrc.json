@@ -1,5 +1,12 @@
 {
   "$schema": "./node_modules/prefont/schema.json",
-  "name": "name",
-  "fonts": ["Inter", "JetBrains Mono"]
+  "browsers": ["chromium", "firefox", "webkit"],
+  "symbolSets": [{ "name": "default", "chars": "0123456789 .~ " }],
+  "fonts": [
+    {
+      "font": "https://fonts.googleapis.com/css2?family=Inter:wght@700&display=block",
+      "family": "Inter",
+      "weights": [100]
+    }
+  ]
 }

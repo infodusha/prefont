@@ -32,15 +32,17 @@
     }
   },
   "scripts": {
+    "prebuild": "pnpm clean && pnpm schema",
     "build": "tsc --build && chmod +x dist/cli/bin.js",
     "dev": "tsc --build --watch",
     "clean": "rm -rf dist",
-    "schema": "node tools/generate-schema.ts",
-    "example": "pnpm -F prefont-example demo",
+    "schema": "node tools/generate-schema.ts && oxfmt schema.json",
+    "example": "pnpm -F prefont-example",
     "lint": "oxlint",
     "fmt": "oxfmt"
   },
   "dependencies": {
+    "playwright-core": "^1.49.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
