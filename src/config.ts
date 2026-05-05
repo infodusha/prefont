@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
+import * as z from "zod";
+import { configSchema, type Config } from "./schema.js";
 
-export const CONFIG_FILENAME = "prefont.config.json";
-export interface Config {
-  [key: string]: unknown;
-}
+export type { Config } from "./schema.js";
+
+export const CONFIG_FILENAME = "prefontrc.json";
 
 export function loadConfig(
   cwd: string,
@@ -23,6 +24,12 @@ export function loadConfig(
   }
 
   const raw = fs.readFileSync(configPath, "utf8");
-  const config = JSON.parse(raw) as Config;
+  const parsed = configSchema.safeParse(JSON.parse(raw));
+  if (!parsed.success) {
+    throw new Error(`Invalid ${path.relative(cwd, configPath)}:\n${z.prettifyError(parsed.error)}`);
+  }
+
+  const config = parsed.data;
+  delete config.$schema;
   return { config, source: configPath };
 }

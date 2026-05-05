@@ -1,0 +1,23 @@
+{
+  "$id": "https://raw.githubusercontent.com/infodusha/prefont/main/schema.json",
+  "title": "PrefontConfig",
+  "description": "Configuration for the prefont CLI (prefontrc.json).",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "description": "test",
+      "type": "string"
+    },
+    "fonts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

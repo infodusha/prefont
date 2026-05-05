@@ -1,0 +1,5 @@
+{
+  "$schema": "./node_modules/prefont/schema.json",
+  "name": "name",
+  "fonts": ["Inter", "JetBrains Mono"]
+}

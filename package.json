@@ -17,6 +17,7 @@
   },
   "files": [
     "dist",
+    "schema.json",
     "package.json",
     "README.md",
     "LICENSE"
@@ -34,9 +35,13 @@
     "build": "tsc -p tsconfig.build.json && chmod +x dist/cli.js",
     "dev": "tsc -p tsconfig.build.json --watch",
     "clean": "rm -rf dist",
+    "schema": "node tools/generate-schema.ts",
     "example": "pnpm -F prefont-example demo",
     "lint": "oxlint",
     "fmt": "oxfmt"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.19.17",
