@@ -13,7 +13,7 @@
     "url": "git+https://github.com/infodusha/prefont.git"
   },
   "bin": {
-    "prefont": "./dist/cli.js"
+    "prefont": "./dist/cli/bin.js"
   },
   "files": [
     "dist",
@@ -23,17 +23,17 @@
     "LICENSE"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/client/index.js",
+  "types": "./dist/client/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.js"
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && chmod +x dist/cli.js",
-    "dev": "tsc -p tsconfig.build.json --watch",
+    "build": "tsc --build && chmod +x dist/cli/bin.js",
+    "dev": "tsc --build --watch",
     "clean": "rm -rf dist",
     "schema": "node tools/generate-schema.ts",
     "example": "pnpm -F prefont-example demo",
