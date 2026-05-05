@@ -75,24 +75,8 @@
             "minItems": 1,
             "type": "array",
             "items": {
-              "anyOf": [
-                { "type": "string" },
-                {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Unique identifier used to reference this set from font items."
-                    },
-                    "chars": {
-                      "type": "string",
-                      "description": "String of characters to measure as part of this set."
-                    }
-                  },
-                  "required": ["name", "chars"]
-                }
-              ],
-              "description": "Either the name of a top-level symbolSets entry, or an inline symbol set definition."
+              "type": "string",
+              "description": "The name of a top-level symbolSets entry."
             }
           }
         },

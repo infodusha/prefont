@@ -1,8 +1,9 @@
 import { chromium, firefox, webkit, type Browser, type BrowserType } from "playwright-core";
-import { measureCharWidths } from "../client/measure-char-widths.js";
-import type { BrowserName, Config, FontItem, SymbolSet } from "../core/schema.js";
+import type { BrowserName } from "../core/schema.js";
 import type { Data, FontMeasurement, WeightWidths } from "../client/index.js";
+import type { ResolvedFont } from "./config.js";
 import { buildFontHtml } from "./font-loader.js";
+import { setupPage } from "./page-setup.js";
 
 const launchers: Record<BrowserName, BrowserType> = {
   chromium,
@@ -10,36 +11,14 @@ const launchers: Record<BrowserName, BrowserType> = {
   webkit,
 };
 
-function resolveSymbolSets(item: FontItem, config: Config): SymbolSet[] {
-  if (!item.symbolSets) return config.symbolSets;
-  return item.symbolSets.map((ref) => {
-    if (typeof ref === "string") {
-      const found = config.symbolSets.find((s) => s.name === ref);
-      if (!found) {
-        throw new Error(`Font "${item.family}" references unknown symbol set "${ref}"`);
-      }
-      return found;
-    }
-    return ref;
-  });
-}
-
-function resolveBrowsers(item: FontItem, config: Config): BrowserName[] {
-  return item.browsers ?? config.browsers;
-}
-
 async function measureFontInBrowser(
   browser: Browser,
-  item: FontItem,
-  configDir: string,
-  symbolSets: SymbolSet[],
+  item: ResolvedFont,
+  fontHtml: string,
 ): Promise<WeightWidths> {
   const page = await browser.newPage();
   try {
-    await page.setContent(await buildFontHtml(item, configDir));
-    await page.addScriptTag({
-      content: `window.__measureCharWidths=${measureCharWidths.toString()};`,
-    });
+    await setupPage(page, fontHtml);
 
     const result: WeightWidths = {};
     for (const weight of item.weights) {
@@ -49,14 +28,9 @@ async function measureFontInBrowser(
       );
 
       const perSet: Record<string, Record<string, number>> = {};
-      for (const set of symbolSets) {
+      for (const set of item.symbolSets) {
         const widths = await page.evaluate(
-          ({ family, weight, chars }) =>
-            (
-              window as unknown as {
-                __measureCharWidths: (f: string, w: number, c: string[]) => Record<string, number>;
-              }
-            ).__measureCharWidths(family, weight, chars),
+          ({ family, weight, chars }) => window.__prefont.measureCharWidths(family, weight, chars),
           { family: item.family, weight, chars: [...set.chars] },
         );
         perSet[set.name] = widths;
@@ -69,34 +43,37 @@ async function measureFontInBrowser(
   }
 }
 
-export async function measure(config: Config, configDir: string): Promise<Data> {
+export async function measure(fonts: ResolvedFont[], configDir: string): Promise<Data> {
   const browsersNeeded = new Set<BrowserName>();
-  for (const item of config.fonts) {
-    for (const b of resolveBrowsers(item, config)) browsersNeeded.add(b);
+  for (const item of fonts) {
+    for (const b of item.browsers) browsersNeeded.add(b);
   }
 
-  const browsers = new Map<BrowserName, Browser>();
-  for (const name of browsersNeeded) {
-    browsers.set(name, await launchers[name].launch());
-  }
+  const browserEntries = await Promise.all(
+    [...browsersNeeded].map(async (n) => [n, await launchers[n].launch()] as const),
+  );
+  const browsers = new Map<BrowserName, Browser>(browserEntries);
 
   try {
-    const data: FontMeasurement[] = [];
-    for (const item of config.fonts) {
-      const sets = resolveSymbolSets(item, config);
-      const itemBrowsers = resolveBrowsers(item, config);
-      const browserResults: FontMeasurement["browsers"] = {};
-      for (const name of itemBrowsers) {
-        const browser = browsers.get(name)!;
-        browserResults[name] = await measureFontInBrowser(browser, item, configDir, sets);
-      }
-      data.push({ family: item.family, browsers: browserResults });
-    }
+    const fontHtmlByFont = new Map<ResolvedFont, string>(
+      await Promise.all(
+        fonts.map(async (item) => [item, await buildFontHtml(item, configDir)] as const),
+      ),
+    );
 
-    return data;
+    return await Promise.all(
+      fonts.map(async (item): Promise<FontMeasurement> => {
+        const fontHtml = fontHtmlByFont.get(item)!;
+        const entries = await Promise.all(
+          item.browsers.map(async (name) => {
+            const widths = await measureFontInBrowser(browsers.get(name)!, item, fontHtml);
+            return [name, widths] as const;
+          }),
+        );
+        return { family: item.family, browsers: Object.fromEntries(entries) };
+      }),
+    );
   } finally {
-    for (const browser of browsers.values()) {
-      await browser.close();
-    }
+    await Promise.allSettled([...browsers.values()].map((b) => b.close()));
   }
 }

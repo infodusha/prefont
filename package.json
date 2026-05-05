@@ -42,13 +42,13 @@
     "fmt": "oxfmt"
   },
   "dependencies": {
-    "playwright-core": "^1.49.0",
+    "playwright-core": "^1.59.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.19.17",
     "oxfmt": "^0.47.0",
-    "oxlint": "^1.62.0",
+    "oxlint": "^1.63.0",
     "typescript": "~6.0.3"
   },
   "engines": {

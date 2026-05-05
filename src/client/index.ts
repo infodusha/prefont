@@ -1,6 +1,6 @@
-import type { BrowserName } from "../core/schema.ts";
+import type { BrowserName } from "../core/schema.js";
 
-export type { BrowserName, Config, FontItem, SymbolSet } from "../core/schema.ts";
+export type { BrowserName, Config, FontItem, SymbolSet } from "../core/schema.js";
 
 export type CharWidths = Record<string, number>;
 export type SymbolSetWidths = Record<string, CharWidths>;
