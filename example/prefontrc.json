@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/prefont/schema.json",
   "browsers": ["chromium", "firefox", "webkit"],
-  "symbolSets": [{ "name": "default", "chars": "0123456789 .~ " }],
+  "symbolSets": [{ "name": "default", "chars": "0123456789. " }],
   "fonts": [
     {
       "font": "https://fonts.googleapis.com/css2?family=Inter:wght@400&display=block",
