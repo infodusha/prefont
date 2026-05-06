@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.0](https://github.com/infodusha/prefont/compare/v0.1.0...v0.2.0) (2026-05-06)
+
+
+### Features
+
+* fallback support ([c1d7763](https://github.com/infodusha/prefont/commit/c1d7763d2a4e6123587012fe4c80c1dd59e3cbd0))
+* no need to store char set in data ([433c3be](https://github.com/infodusha/prefont/commit/433c3bead0405a4a344ed12f13deb78f21499270))
+* rename default config file ([6120ac0](https://github.com/infodusha/prefont/commit/6120ac01d23d7fc665cf686d1ae6ef24adecafeb))
+* rename default out file ([26d70b3](https://github.com/infodusha/prefont/commit/26d70b3a8b461b68ecf87c011af7f5fb9bf5d05e))
+
 ## [0.1.0](https://github.com/infodusha/prefont/compare/v0.0.1...v0.1.0) (2026-05-06)
 
 
