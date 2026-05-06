@@ -1,6 +1,6 @@
 import { chromium, firefox, webkit, type Browser, type BrowserType } from "playwright-core";
 import type { BrowserName } from "../core/schema.js";
-import type { Data, FontMeasurement, WeightWidths } from "../client/index.js";
+import type { CharWidths, Data, FontMeasurement, WeightWidths } from "../client/index.js";
 import type { ResolvedFont } from "./config.js";
 import { buildFontHtml } from "./font-loader.js";
 import { setupPage } from "./page-setup.js";
@@ -27,15 +27,15 @@ async function measureFontInBrowser(
         [item.family, weight],
       );
 
-      const perSet: Record<string, Record<string, number>> = {};
+      const merged: CharWidths = {};
       for (const set of item.symbolSets) {
         const widths = await page.evaluate(
           ({ family, weight, chars }) => window.__prefont.measureCharWidths(family, weight, chars),
           { family: item.family, weight, chars: [...set.chars] },
         );
-        perSet[set.name] = widths;
+        Object.assign(merged, widths);
       }
-      result[weight] = perSet;
+      result[weight] = merged;
     }
     return result;
   } finally {

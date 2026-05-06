@@ -28,17 +28,13 @@ export function getCharWidths(data: Data, opts: CharWidthsSelector): CharWidths 
   if (!weights) {
     throw new Error(`prefont: browser "${opts.browser}" not measured for family "${opts.family}"`);
   }
-  const sets = weights[opts.weight];
-  if (!sets) {
+  const widths = weights[opts.weight];
+  if (!widths) {
     throw new Error(
       `prefont: weight ${opts.weight} not measured for "${opts.family}" on ${opts.browser}`,
     );
   }
-  const merged: CharWidths = {};
-  for (const setWidths of Object.values(sets)) {
-    Object.assign(merged, setWidths);
-  }
-  return merged;
+  return widths;
 }
 
 export function sumCharWidths(widths: CharWidths, text: string, fontSize: number): number {
@@ -71,12 +67,8 @@ export function measureTextAllWeights(
     throw new Error(`prefont: browser "${opts.browser}" not measured for family "${opts.family}"`);
   }
   const result: Record<number, number> = {};
-  for (const [weight, sets] of Object.entries(weights)) {
-    const merged: CharWidths = {};
-    for (const setWidths of Object.values(sets)) {
-      Object.assign(merged, setWidths);
-    }
-    result[Number(weight)] = sumCharWidths(merged, opts.text, opts.fontSize);
+  for (const [weight, widths] of Object.entries(weights)) {
+    result[Number(weight)] = sumCharWidths(widths, opts.text, opts.fontSize);
   }
   return result;
 }

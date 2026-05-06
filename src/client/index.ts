@@ -3,8 +3,7 @@ import type { BrowserName } from "../core/schema.js";
 export type { BrowserName, Config, FontItem, SymbolSet } from "../core/schema.js";
 
 export type CharWidths = Record<string, number>;
-export type SymbolSetWidths = Record<string, CharWidths>;
-export type WeightWidths = Record<string, SymbolSetWidths>;
+export type WeightWidths = Record<string, CharWidths>;
 export type BrowserWidths = Partial<Record<BrowserName, WeightWidths>>;
 
 export interface FontMeasurement {
