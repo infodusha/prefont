@@ -6,10 +6,11 @@ export interface MeasureFromCanvasOptions {
   weight: number;
   text: string;
   fontSize: number;
+  fallback?: string;
 }
 
 export function measureTextFromCanvas(opts: MeasureFromCanvasOptions): number {
   const uniqueChars = [...new Set(opts.text)];
   const widths = measureCharWidths(opts.family, opts.weight, uniqueChars);
-  return sumCharWidths(widths, opts.text, opts.fontSize);
+  return sumCharWidths(widths, opts.text, opts.fontSize, opts.fallback);
 }

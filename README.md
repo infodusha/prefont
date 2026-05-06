@@ -154,28 +154,30 @@ measureText({
   // required outside the browser:
   data,
   browser: "chromium",
+  // optional: width to use for any character missing from the measured set
+  fallback: " ",
 }); // → number
 ```
 
 ### `measureTextFromData(data, opts)`
 
-Pure function. Computes the width of `text` at `fontSize` using widths captured for `family` / `browser` / `weight`.
+Pure function. Computes the width of `text` at `fontSize` using widths captured for `family` / `browser` / `weight`. Accepts an optional `fallback` character whose width substitutes for any character not present in the data.
 
 ### `measureTextFromCanvas(opts)`
 
-Browser-only. Measures `text` using a hidden `<canvas>` for the currently loaded font.
+Browser-only. Measures `text` using a hidden `<canvas>` for the currently loaded font. Also accepts `fallback`.
 
 ### `measureTextAllWeights(data, opts)`
 
-Returns `{ [weight]: pixelWidth }` for every weight measured for the given family on the given browser. Handy for picking a weight that fits a target width.
+Returns `{ [weight]: pixelWidth }` for every weight measured for the given family on the given browser. Handy for picking a weight that fits a target width. Accepts `fallback`.
 
 ### `getCharWidths(data, { family, browser, weight })`
 
 Returns the merged `{ char: widthPerEm }` map for the given selector across all symbol sets.
 
-### `sumCharWidths(widths, text, fontSize)`
+### `sumCharWidths(widths, text, fontSize, fallback?)`
 
-Sums per-em widths for `text` and multiplies by `fontSize`. Throws if `text` contains a character that was not measured.
+Sums per-em widths for `text` and multiplies by `fontSize`. If `fallback` is provided, its width is used for any character not in `widths`; otherwise an unmeasured character throws.
 
 ## Data shape
 

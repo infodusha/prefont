@@ -26,5 +26,6 @@ export function measureText(opts: MeasureTextOptions): number {
     weight: opts.weight,
     text: opts.text,
     fontSize: opts.fontSize,
+    fallback: opts.fallback,
   });
 }

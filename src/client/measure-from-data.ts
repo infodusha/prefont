@@ -10,6 +10,7 @@ export interface CharWidthsSelector {
 export interface MeasureFromDataOptions extends CharWidthsSelector {
   text: string;
   fontSize: number;
+  fallback?: string;
 }
 
 export interface MeasureAllWeightsOptions {
@@ -17,6 +18,7 @@ export interface MeasureAllWeightsOptions {
   browser: BrowserName;
   text: string;
   fontSize: number;
+  fallback?: string;
 }
 
 export function getCharWidths(data: Data, opts: CharWidthsSelector): CharWidths {
@@ -37,10 +39,24 @@ export function getCharWidths(data: Data, opts: CharWidthsSelector): CharWidths 
   return widths;
 }
 
-export function sumCharWidths(widths: CharWidths, text: string, fontSize: number): number {
+export function sumCharWidths(
+  widths: CharWidths,
+  text: string,
+  fontSize: number,
+  fallback?: string,
+): number {
+  let fallbackWidth: number | undefined;
+  if (fallback !== undefined) {
+    fallbackWidth = widths[fallback];
+    if (fallbackWidth === undefined) {
+      throw new Error(
+        `prefont: fallback character ${JSON.stringify(fallback)} not present in measured widths`,
+      );
+    }
+  }
   let total = 0;
   for (const ch of text) {
-    const w = widths[ch];
+    const w = widths[ch] ?? fallbackWidth;
     if (w === undefined) {
       throw new Error(`prefont: character ${JSON.stringify(ch)} not present in measured widths`);
     }
@@ -51,7 +67,7 @@ export function sumCharWidths(widths: CharWidths, text: string, fontSize: number
 
 export function measureTextFromData(data: Data, opts: MeasureFromDataOptions): number {
   const widths = getCharWidths(data, opts);
-  return sumCharWidths(widths, opts.text, opts.fontSize);
+  return sumCharWidths(widths, opts.text, opts.fontSize, opts.fallback);
 }
 
 export function measureTextAllWeights(
@@ -68,7 +84,7 @@ export function measureTextAllWeights(
   }
   const result: Record<number, number> = {};
   for (const [weight, widths] of Object.entries(weights)) {
-    result[Number(weight)] = sumCharWidths(widths, opts.text, opts.fontSize);
+    result[Number(weight)] = sumCharWidths(widths, opts.text, opts.fontSize, opts.fallback);
   }
   return result;
 }
