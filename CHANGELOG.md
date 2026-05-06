@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/infodusha/prefont/compare/v0.2.0...v0.3.0) (2026-05-06)
+
+
+### Features
+
+* increase calc accuracy ([958dd3f](https://github.com/infodusha/prefont/commit/958dd3f12d78e9d5f8506f6b586cb1b3f7f04271))
+* rename data type ([83f91f5](https://github.com/infodusha/prefont/commit/83f91f5e475a9f20012637bd4a3336d0be1e32a8))
+
+
+### Bug Fixes
+
+* recover measureTextAllWeights ([3a1869d](https://github.com/infodusha/prefont/commit/3a1869d25cc8db02e0ca70faf441f6d712e5b639))
+
 ## [0.2.0](https://github.com/infodusha/prefont/compare/v0.1.0...v0.2.0) (2026-05-06)
 
 
