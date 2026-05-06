@@ -10,7 +10,7 @@ import { getFileSize } from "./helpers.js";
 const { values } = parseArgs({
   strict: true,
   options: {
-    config: { type: "string", short: "c", default: "prefontrc.json" },
+    config: { type: "string", short: "c", default: ".prefontrc.json" },
   },
 });
 

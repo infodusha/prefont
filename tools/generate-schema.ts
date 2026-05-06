@@ -14,7 +14,7 @@ const jsonSchema = z.toJSONSchema(configSchema, {
 const doc = {
   $id: "https://raw.githubusercontent.com/infodusha/prefont/main/schema.json",
   title: "PrefontConfig",
-  description: "Configuration for the prefont CLI (prefontrc.json).",
+  description: "Configuration for the prefont CLI (.prefontrc.json).",
   ...jsonSchema,
 };
 

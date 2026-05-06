@@ -22,7 +22,7 @@ npx playwright install chromium firefox webkit
 
 ## Quick start
 
-1. Create `prefontrc.json` at the root of your project:
+1. Create `.prefontrc.json` at the root of your project:
 
    ```json
    {
@@ -69,15 +69,15 @@ npx playwright install chromium firefox webkit
 prefont [--config <path>]
 ```
 
-| Flag             | Default          | Description                                                  |
-| ---------------- | ---------------- | ------------------------------------------------------------ |
-| `-c`, `--config` | `prefontrc.json` | Path to the config file (relative to the working directory). |
+| Flag             | Default           | Description                                                  |
+| ---------------- | ----------------- | ------------------------------------------------------------ |
+| `-c`, `--config` | `.prefontrc.json` | Path to the config file (relative to the working directory). |
 
 The CLI resolves font paths relative to the config file, launches the requested browsers in parallel, measures each font/weight/symbol-set combination, and writes a single JSON file to the configured `out` path.
 
 ## Configuration
 
-`prefontrc.json` is validated against [`schema.json`](./schema.json), so editors with JSON Schema support get autocomplete and inline docs.
+`.prefontrc.json` is validated against [`schema.json`](./schema.json), so editors with JSON Schema support get autocomplete and inline docs.
 
 | Field        | Type                                      | Description                                                                                        |
 | ------------ | ----------------------------------------- | -------------------------------------------------------------------------------------------------- |
