@@ -1,6 +1,6 @@
 {
   "name": "prefont",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Measure text width server side",
   "homepage": "https://github.com/infodusha/prefont#readme",
   "bugs": {
