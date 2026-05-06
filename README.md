@@ -135,9 +135,6 @@ import {
   measureText,
   measureTextFromData,
   measureTextFromCanvas,
-  measureTextAllWeights,
-  getCharWidths,
-  sumCharWidths,
 } from "prefont";
 ```
 
@@ -166,36 +163,6 @@ Pure function. Computes the width of `text` at `fontSize` using widths captured 
 ### `measureTextFromCanvas(opts)`
 
 Browser-only. Measures `text` using a hidden `<canvas>` for the currently loaded font. Also accepts `fallback`.
-
-### `measureTextAllWeights(data, opts)`
-
-Returns `{ [weight]: pixelWidth }` for every weight measured for the given family on the given browser. Handy for picking a weight that fits a target width. Accepts `fallback`.
-
-### `getCharWidths(data, { family, browser, weight })`
-
-Returns the merged `{ char: widthPerEm }` map for the given selector across all symbol sets.
-
-### `sumCharWidths(widths, text, fontSize, fallback?)`
-
-Sums per-em widths for `text` and multiplies by `fontSize`. If `fallback` is provided, its width is used for any character not in `widths`; otherwise an unmeasured character throws.
-
-## Data shape
-
-```ts
-type CharWidths = Record<string, number>; // per em (multiply by fontSize)
-type SymbolSetWidths = Record<string, CharWidths>; // keyed by symbol-set name
-type WeightWidths = Record<string, SymbolSetWidths>; // keyed by weight
-type BrowserWidths = Partial<Record<BrowserName, WeightWidths>>;
-
-interface FontMeasurement {
-  family: string;
-  browsers: BrowserWidths;
-}
-
-type Data = FontMeasurement[];
-```
-
-Widths are stored per em (i.e. measured at `1px` font size) so `width * fontSize` gives you pixels at any size.
 
 ## License
 

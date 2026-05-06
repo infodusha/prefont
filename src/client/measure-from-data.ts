@@ -1,5 +1,6 @@
 import type { BrowserName } from "../core/schema.js";
 import type { CharWidths, PrefontData } from "./index.js";
+import { SCALE } from "./measure-char-widths.js";
 
 export interface CharWidthsSelector {
   family: string;
@@ -62,29 +63,10 @@ export function sumCharWidths(
     }
     total += w;
   }
-  return total * fontSize;
+  return (total * fontSize) / SCALE;
 }
 
 export function measureTextFromData(data: PrefontData, opts: MeasureFromDataOptions): number {
   const widths = getCharWidths(data, opts);
   return sumCharWidths(widths, opts.text, opts.fontSize, opts.fallback);
-}
-
-export function measureTextAllWeights(
-  data: PrefontData,
-  opts: MeasureAllWeightsOptions,
-): Record<number, number> {
-  const font = data.find((f) => f.family === opts.family);
-  if (!font) {
-    throw new Error(`prefont: family "${opts.family}" not found in data`);
-  }
-  const weights = font.browsers[opts.browser];
-  if (!weights) {
-    throw new Error(`prefont: browser "${opts.browser}" not measured for family "${opts.family}"`);
-  }
-  const result: Record<number, number> = {};
-  for (const [weight, widths] of Object.entries(weights)) {
-    result[Number(weight)] = sumCharWidths(widths, opts.text, opts.fontSize, opts.fallback);
-  }
-  return result;
 }
