@@ -1,7 +1,7 @@
 {
   "name": "prefont",
   "version": "0.3.0",
-  "description": "",
+  "description": "Measure text width server side",
   "homepage": "https://github.com/infodusha/prefont#readme",
   "bugs": {
     "url": "https://github.com/infodusha/prefont/issues"
@@ -17,6 +17,7 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.tsbuildinfo",
     "schema.json",
     "package.json",
     "README.md",
