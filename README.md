@@ -112,13 +112,13 @@ The CLI resolves font paths relative to the config file, launches the requested 
   ],
   "fonts": [
     {
-      "font": "./fonts/Inter-Variable.woff2",
+      "font": "fonts/Inter-Variable.woff2",
       "family": "Inter",
       "weights": [400, 600, 700]
     },
     {
-      "font": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=block",
-      "family": "JetBrains Mono",
+      "font": "https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=block",
+      "family": "Roboto",
       "weights": [400],
       "symbolSets": ["digits"]
     }
