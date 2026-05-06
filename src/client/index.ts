@@ -11,7 +11,7 @@ export interface FontMeasurement {
   browsers: BrowserWidths;
 }
 
-export type Data = FontMeasurement[];
+export type PrefontData = FontMeasurement[];
 
 export {
   getCharWidths,

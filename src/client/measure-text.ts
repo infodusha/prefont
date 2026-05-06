@@ -1,13 +1,10 @@
 import type { BrowserName } from "../core/schema.js";
-import type { Data } from "./index.js";
-import {
-  measureTextFromCanvas,
-  type MeasureFromCanvasOptions,
-} from "./measure-from-canvas.js";
+import type { PrefontData } from "./index.js";
+import { measureTextFromCanvas, type MeasureFromCanvasOptions } from "./measure-from-canvas.js";
 import { measureTextFromData } from "./measure-from-data.js";
 
 export interface MeasureTextOptions extends MeasureFromCanvasOptions {
-  data?: Data;
+  data?: PrefontData;
   browser?: BrowserName;
 }
 

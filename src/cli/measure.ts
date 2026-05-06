@@ -1,6 +1,6 @@
 import { chromium, firefox, webkit, type Browser, type BrowserType } from "playwright-core";
 import type { BrowserName } from "../core/schema.js";
-import type { CharWidths, Data, FontMeasurement, WeightWidths } from "../client/index.js";
+import type { CharWidths, PrefontData, FontMeasurement, WeightWidths } from "../client/index.js";
 import type { ResolvedFont } from "./config.js";
 import { buildFontHtml } from "./font-loader.js";
 import { setupPage } from "./page-setup.js";
@@ -43,7 +43,7 @@ async function measureFontInBrowser(
   }
 }
 
-export async function measure(fonts: ResolvedFont[], configDir: string): Promise<Data> {
+export async function measure(fonts: ResolvedFont[], configDir: string): Promise<PrefontData> {
   const browsersNeeded = new Set<BrowserName>();
   for (const item of fonts) {
     for (const b of item.browsers) browsersNeeded.add(b);

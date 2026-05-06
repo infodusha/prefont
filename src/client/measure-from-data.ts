@@ -1,5 +1,5 @@
 import type { BrowserName } from "../core/schema.js";
-import type { CharWidths, Data } from "./index.js";
+import type { CharWidths, PrefontData } from "./index.js";
 
 export interface CharWidthsSelector {
   family: string;
@@ -21,7 +21,7 @@ export interface MeasureAllWeightsOptions {
   fallback?: string;
 }
 
-export function getCharWidths(data: Data, opts: CharWidthsSelector): CharWidths {
+export function getCharWidths(data: PrefontData, opts: CharWidthsSelector): CharWidths {
   const font = data.find((f) => f.family === opts.family);
   if (!font) {
     throw new Error(`prefont: family "${opts.family}" not found in data`);
@@ -65,13 +65,13 @@ export function sumCharWidths(
   return total * fontSize;
 }
 
-export function measureTextFromData(data: Data, opts: MeasureFromDataOptions): number {
+export function measureTextFromData(data: PrefontData, opts: MeasureFromDataOptions): number {
   const widths = getCharWidths(data, opts);
   return sumCharWidths(widths, opts.text, opts.fontSize, opts.fallback);
 }
 
 export function measureTextAllWeights(
-  data: Data,
+  data: PrefontData,
   opts: MeasureAllWeightsOptions,
 ): Record<number, number> {
   const font = data.find((f) => f.family === opts.family);
