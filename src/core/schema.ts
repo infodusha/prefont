@@ -32,7 +32,7 @@ export const configSchema = z.object({
   $schema: z.string().optional().describe("JSON Schema reference for editor tooling."),
   out: z
     .string()
-    .default(".prefont/data.json")
+    .default("prefont.json")
     .describe("Output file path for generated data, relative to the config file."),
   browsers: z
     .array(browserSchema)

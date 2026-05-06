@@ -7,7 +7,7 @@
   "properties": {
     "$schema": { "description": "JSON Schema reference for editor tooling.", "type": "string" },
     "out": {
-      "default": ".prefont/data.json",
+      "default": "prefont.json",
       "description": "Output file path for generated data, relative to the config file.",
       "type": "string"
     },

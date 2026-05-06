@@ -45,12 +45,12 @@ npx playwright install chromium firefox webkit
    npx prefont
    ```
 
-   By default this writes `.prefont/data.json`.
+   By default this writes `prefont.json`.
 
 3. Use the data at runtime:
 
    ```js
-   import data from "./.prefont/data.json" with { type: "json" };
+   import data from "./prefont.json" with { type: "json" };
    import { measureTextFromData } from "prefont";
 
    const width = measureTextFromData(data, {
@@ -79,12 +79,12 @@ The CLI resolves font paths relative to the config file, launches the requested 
 
 `.prefontrc.json` is validated against [`schema.json`](./schema.json), so editors with JSON Schema support get autocomplete and inline docs.
 
-| Field        | Type                                      | Description                                                                                        |
-| ------------ | ----------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `out`        | `string`                                  | Output path for the generated data, relative to the config file. Defaults to `.prefont/data.json`. |
-| `browsers`   | `("chromium" \| "firefox" \| "webkit")[]` | Default browsers used to measure every font.                                                       |
-| `symbolSets` | `{ name, chars }[]`                       | Reusable groups of characters to measure. Each font measures every set unless overridden.          |
-| `fonts`      | `FontItem[]`                              | Fonts to measure (see below).                                                                      |
+| Field        | Type                                      | Description                                                                                  |
+| ------------ | ----------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `out`        | `string`                                  | Output path for the generated data, relative to the config file. Defaults to `prefont.json`. |
+| `browsers`   | `("chromium" \| "firefox" \| "webkit")[]` | Default browsers used to measure every font.                                                 |
+| `symbolSets` | `{ name, chars }[]`                       | Reusable groups of characters to measure. Each font measures every set unless overridden.    |
+| `fonts`      | `FontItem[]`                              | Fonts to measure (see below).                                                                |
 
 ### `FontItem`
 
@@ -101,7 +101,7 @@ The CLI resolves font paths relative to the config file, launches the requested 
 ```json
 {
   "$schema": "./node_modules/prefont/schema.json",
-  "out": ".prefont/data.json",
+  "out": "prefont.json",
   "browsers": ["chromium", "firefox", "webkit"],
   "symbolSets": [
     { "name": "digits", "chars": "0123456789. " },

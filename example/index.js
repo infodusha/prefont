@@ -1,4 +1,4 @@
-import data from "./.prefont/data.json" with { type: "json" };
+import data from "./prefont.json" with { type: "json" };
 import {
   measureText,
   measureTextAllWeights,
