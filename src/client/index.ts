@@ -13,6 +13,6 @@ export interface FontMeasurement {
 
 export type PrefontData = FontMeasurement[];
 
-export { measureTextFromData } from "./measure-from-data.js";
+export { measureTextAllWeights, measureTextFromData } from "./measure-from-data.js";
 export { measureTextFromCanvas } from "./measure-from-canvas.js";
 export { measureText } from "./measure-text.js";

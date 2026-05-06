@@ -135,6 +135,7 @@ import {
   measureText,
   measureTextFromData,
   measureTextFromCanvas,
+  measureTextAllWeights,
 } from "prefont";
 ```
 
@@ -163,6 +164,10 @@ Pure function. Computes the width of `text` at `fontSize` using widths captured 
 ### `measureTextFromCanvas(opts)`
 
 Browser-only. Measures `text` using a hidden `<canvas>` for the currently loaded font. Also accepts `fallback`.
+
+### `measureTextAllWeights(data, opts)`
+
+Returns `{ [weight]: pixelWidth }` for every weight measured for the given family on the given browser. Accepts `fallback`.
 
 ## License
 
